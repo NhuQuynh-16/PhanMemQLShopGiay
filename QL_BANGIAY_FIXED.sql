@@ -728,3 +728,5 @@ VALUES
 ('quanlykho2', '123456', 'NV005', N'Quản lý kho', N'Hoạt động', GETDATE())
 GO
 
+delete from TAIKHOAN
+where MANV='NV005'
