@@ -1,0 +1,10 @@
+# Bỏ qua thư mục build
+bin/
+obj/
+
+# Bỏ qua file do Visual Studio tạo ra
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
