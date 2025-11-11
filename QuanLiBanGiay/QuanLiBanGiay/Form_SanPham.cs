@@ -87,7 +87,7 @@ namespace QuanLiBanGiay
 
             try
             {
-                // ✅ Cách an toàn nhất: lấy dữ liệu trực tiếp từ DataTable qua DataRowView
+                // Cách an toàn nhất: lấy dữ liệu trực tiếp từ DataTable qua DataRowView
                 DataRowView drv = dataGridView1.Rows[e.RowIndex].DataBoundItem as DataRowView;
 
                 if (drv == null)
@@ -110,7 +110,7 @@ namespace QuanLiBanGiay
                 if (!string.IsNullOrEmpty(fileAnh))
                 {
                     // --- Đường dẫn tuyệt đối tới thư mục chứa ảnh ---
-                    string imageFolder = @"C:\Users\Admin\OneDrive\Máy tính\CN.NET\ĐỒ ÁN\ảnh\ảnh giày";
+                    string imageFolder = @"\Images\SanPham";
                     string duongDan = Path.Combine(imageFolder, fileAnh);
 
 

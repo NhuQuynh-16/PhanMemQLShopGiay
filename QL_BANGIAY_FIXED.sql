@@ -29,7 +29,7 @@ CREATE TABLE NHANVIEN
 	NGAYVAOLAM DATE, --MS THÊM
     CONSTRAINT PK_NHANVIEN PRIMARY KEY(MANV),
 	CONSTRAINT CHK_GIOITINH CHECK (GIOITINH IN (N'Nam', N'Nữ'))
-);
+)
 
 -- 3.TẠO BẢNG NHACUNGCAP
 
@@ -43,7 +43,7 @@ CREATE TABLE NHACUNGCAP
 	TRANGTHAI NVARCHAR(30) DEFAULT N'Đang hợp tác',
     CONSTRAINT PK_NHACUNGCAP PRIMARY KEY(MANCC),
 	CONSTRAINT CHK_TRANGTHAI_NCC CHECK (TRANGTHAI IN (N'Đang hợp tác', N'Ngừng hợp tác'))
-);
+)
 
 -- 4.TẠO BẢNG LOAIGIAY
 
@@ -53,7 +53,7 @@ CREATE TABLE LOAIGIAY
     TENLOAI NVARCHAR(50),
 	MOTA NVARCHAR(200),
     CONSTRAINT PK_LOAIGIAY PRIMARY KEY(MALOAI)
-);
+)
 
 -- 5.TẠO BẢNG MAUSAC
 CREATE TABLE MAUSAC
@@ -61,7 +61,7 @@ CREATE TABLE MAUSAC
     MAMAU VARCHAR(10) NOT NULL,
     TENMAU NVARCHAR(50),
     CONSTRAINT PK_MAUSAC PRIMARY KEY(MAMAU)
-);
+)
 
 -- 6.TẠO BẢNG KICHCO
 
@@ -71,7 +71,7 @@ CREATE TABLE KICHCO
     KICHCO NVARCHAR(10),
     CONSTRAINT PK_KICHCO PRIMARY KEY(MASIZE),
 	CONSTRAINT CHK_KICHCO CHECK (KICHCO IN (N'35', N'36', N'37', N'38', N'39', N'40', N'41', N'42', N'43', N'44', N'45'))
-);
+)
 
 -- 7.TẠO BẢNG THƯƠNG HIỆU
 CREATE TABLE THUONGHIEU
@@ -80,7 +80,7 @@ CREATE TABLE THUONGHIEU
     TENTH NVARCHAR(50),
     LOGO VARCHAR(255) NULL,   
     CONSTRAINT PK_THUONGHIEU PRIMARY KEY(MATH)
-);
+)
 -- 8.TẠO BẢNG GIAY
 CREATE TABLE GIAY
 (
@@ -95,7 +95,7 @@ CREATE TABLE GIAY
     CONSTRAINT FK_GIAY_LOAIGIAY FOREIGN KEY(MALOAI) REFERENCES LOAIGIAY(MALOAI),
 	CONSTRAINT FK_GIAY_THUONGHIEU FOREIGN KEY(MATH) REFERENCES THUONGHIEU(MATH),
     CONSTRAINT FK_GIAY_NHACUNGCAP FOREIGN KEY(MANCC) REFERENCES NHACUNGCAP(MANCC)
-);
+)
 
 -- 9.TÁCH THÀNH BẢNG CHI TIẾT GIÀY
 CREATE TABLE CHITIETGIAY
@@ -109,7 +109,7 @@ CREATE TABLE CHITIETGIAY
 	CONSTRAINT FK_CTGIAY_MAUSAC FOREIGN KEY(MAMAU) REFERENCES MAUSAC(MAMAU),
     CONSTRAINT FK_CTGIAY_KICHCO FOREIGN KEY(MASIZE) REFERENCES KICHCO(MASIZE),
 	CONSTRAINT CHK_SOLUONGTON CHECK (SOLUONGTON >= 0)
-);
+)
 -- 10.TẠO BẢNG KHUYẾN MÃI
 CREATE TABLE KHUYENMAI
 (
@@ -121,7 +121,7 @@ CREATE TABLE KHUYENMAI
     CONSTRAINT PK_KHUYENMAI PRIMARY KEY(MAKM),
 	CONSTRAINT CHK_GIAMGIA CHECK (GIAMGIA BETWEEN 0 AND 100),
 	CONSTRAINT CHK_NGAYKM CHECK (NGAYKETTHUC >= NGAYBATDAU)
-);
+)
 
 -- 11.TẠO BẢNG HOADON
 CREATE TABLE HOADON
@@ -134,7 +134,7 @@ CREATE TABLE HOADON
     CONSTRAINT PK_HOADON PRIMARY KEY(MAHD),
     CONSTRAINT FK_HOADON_NHANVIEN FOREIGN KEY(MANV) REFERENCES NHANVIEN(MANV),
     CONSTRAINT FK_HOADON_KHACHHANG FOREIGN KEY(MAKH) REFERENCES KHACHHANG(MAKH)
-);
+)
 
 -- 12.TẠO BẢNG CTHOADON
 CREATE TABLE CTHOADON
@@ -150,7 +150,7 @@ CREATE TABLE CTHOADON
     CONSTRAINT FK_CTHOADON_HOADON FOREIGN KEY(MAHD) REFERENCES HOADON(MAHD),
     CONSTRAINT FK_CTHOADON_GIAY FOREIGN KEY(MAGIAY) REFERENCES GIAY(MAGIAY),
 	CONSTRAINT FK_CTHOADON_KHUYENMAI FOREIGN KEY(MAKM) REFERENCES KHUYENMAI(MAKM)
-);
+)
 
 -- 13.TẠO BẢNG PHIEUNHAP
 CREATE TABLE PHIEUNHAP
@@ -163,7 +163,7 @@ CREATE TABLE PHIEUNHAP
     CONSTRAINT PK_PHIEUNHAP PRIMARY KEY(MAPN),
     CONSTRAINT FK_PHIEUNHAP_NHANVIEN FOREIGN KEY(MANV) REFERENCES NHANVIEN(MANV),
     CONSTRAINT FK_PHIEUNHAP_NHACUNGCAP FOREIGN KEY(MANCC) REFERENCES NHACUNGCAP(MANCC)
-);
+)
 
 -- 14.TẠO BẢNG CTPHIEUNHAP
 
@@ -177,7 +177,7 @@ CREATE TABLE CTPHIEUNHAP
     CONSTRAINT PK_CTPHIEUNHAP PRIMARY KEY(MAPN, MAGIAY),
     CONSTRAINT FK_CTPHIEUNHAP_PHIEUNHAP FOREIGN KEY(MAPN) REFERENCES PHIEUNHAP(MAPN),
     CONSTRAINT FK_CTPHIEUNHAP_GIAY FOREIGN KEY(MAGIAY) REFERENCES GIAY(MAGIAY)
-);
+)
 
 -- 15.TẠO BẢNG TAIKHOAN		
 CREATE TABLE TAIKHOAN
@@ -191,7 +191,7 @@ CREATE TABLE TAIKHOAN
     CONSTRAINT PK_TAIKHOAN PRIMARY KEY(TENDANGNHAP),
     CONSTRAINT FK_TAIKHOAN_NHANVIEN FOREIGN KEY(MANV) REFERENCES NHANVIEN(MANV),
 	CONSTRAINT CHK_TRANGTHAI_TK CHECK (TRANGTHAI IN (N'Hoạt động', N'Vô hiệu hóa'))
-);
+)
 
 -- 1. TRG_CTHOADON_INSERT
 -- Kiểm tra tồn kho, tính thành tiền, giảm tồn kho khi bán
@@ -209,23 +209,23 @@ BEGIN
         WHERE i.SOLUONG > c.SOLUONGTON
     )
     BEGIN
-        RAISERROR(N'Số lượng bán vượt quá tồn kho!',16,1);
-        ROLLBACK TRANSACTION;
-        RETURN;
+        RAISERROR(N'Số lượng bán vượt quá tồn kho!',16,1)
+        ROLLBACK TRANSACTION
+        RETURN
     END
 
     -- Tính thành tiền
     UPDATE CTHOADON
     SET THANHTIEN = i.SOLUONG * i.DONGIA
     FROM CTHOADON c
-    JOIN INSERTED i ON c.MAHD = i.MAHD AND c.MAGIAY = i.MAGIAY;
+    JOIN INSERTED i ON c.MAHD = i.MAHD AND c.MAGIAY = i.MAGIAY
 
     -- Giảm tồn kho
     UPDATE CHITIETGIAY
     SET SOLUONGTON = SOLUONGTON - i.SOLUONG
     FROM CHITIETGIAY ct
-    JOIN INSERTED i ON ct.MAGIAY = i.MAGIAY;
-END;
+    JOIN INSERTED i ON ct.MAGIAY = i.MAGIAY
+END
 GO
 
 -- 2. TRG_UPDATE_TONGTIEN_HOADON
@@ -237,8 +237,8 @@ AS
 BEGIN
     UPDATE HOADON
     SET TONGTIEN = (SELECT SUM(THANHTIEN) FROM CTHOADON WHERE MAHD = h.MAHD)
-    FROM HOADON h;
-END;
+    FROM HOADON h
+END
 GO
 
 -- 3. TRG_UPDATE_DIEMTICHLUY
@@ -251,8 +251,8 @@ BEGIN
     UPDATE KHACHHANG
     SET DIEMTICHLUY = DIEMTICHLUY + (i.TONGTIEN/100000) -- ví dụ: 1đ cho mỗi 100k
     FROM KHACHHANG k
-    JOIN INSERTED i ON k.MAKH = i.MAKH;
-END;
+    JOIN INSERTED i ON k.MAKH = i.MAKH
+END
 GO
 
 -- 4. TRG_CTPHIEUNHAP_INSERT
@@ -266,14 +266,14 @@ BEGIN
     UPDATE CTPHIEUNHAP
     SET THANHTIEN = i.SOLUONG * i.DONGIA
     FROM CTPHIEUNHAP c
-    JOIN INSERTED i ON c.MAPN = i.MAPN AND c.MAGIAY = i.MAGIAY;
+    JOIN INSERTED i ON c.MAPN = i.MAPN AND c.MAGIAY = i.MAGIAY
 
     -- Tăng tồn kho
     UPDATE CHITIETGIAY
     SET SOLUONGTON = SOLUONGTON + i.SOLUONG
     FROM CHITIETGIAY ct
-    JOIN INSERTED i ON ct.MAGIAY = i.MAGIAY;
-END;
+    JOIN INSERTED i ON ct.MAGIAY = i.MAGIAY
+END
 GO
 
 -- 5. TRG_UPDATE_TONGTIEN_PHIEUNHAP
@@ -285,8 +285,8 @@ AS
 BEGIN
     UPDATE PHIEUNHAP
     SET TONGTIEN = (SELECT SUM(THANHTIEN) FROM CTPHIEUNHAP WHERE MAPN = p.MAPN)
-    FROM PHIEUNHAP p;
-END;
+    FROM PHIEUNHAP p
+END
 GO
 
 -- 6. TRG_NHANVIEN_DELETE
@@ -299,8 +299,8 @@ BEGIN
     UPDATE TAIKHOAN
     SET TRANGTHAI = N'Vô hiệu hóa'
     FROM TAIKHOAN t
-    JOIN DELETED d ON t.MANV = d.MANV;
-END;
+    JOIN DELETED d ON t.MANV = d.MANV
+END
 GO
 
 -- 7. TRG_CHECK_KHUYENMAI_DATE
@@ -317,10 +317,10 @@ BEGIN
         WHERE GETDATE() NOT BETWEEN k.NGAYBATDAU AND k.NGAYKETTHUC
     )
     BEGIN
-        RAISERROR(N'Khuyến mãi không hợp lệ trong thời gian này!',16,1);
-        ROLLBACK TRANSACTION;
+        RAISERROR(N'Khuyến mãi không hợp lệ trong thời gian này!',16,1)
+        ROLLBACK TRANSACTION
     END
-END;
+END
 GO
 
 /* ============================================================
@@ -335,10 +335,10 @@ AS
 BEGIN
     IF EXISTS (SELECT 1 FROM INSERTED WHERE GIABAN < 0)
     BEGIN
-        RAISERROR(N'Giá bán không được âm.',16,1);
-        ROLLBACK TRANSACTION;
+        RAISERROR(N'Giá bán không được âm.',16,1)
+        ROLLBACK TRANSACTION
     END
-END;
+END
 GO
 
 -- 9. TRG_CTHOADON_CHECK_DATA
@@ -349,10 +349,10 @@ AS
 BEGIN
     IF EXISTS (SELECT 1 FROM INSERTED WHERE (SOLUONG <= 0 OR DONGIA < 0))
     BEGIN
-        RAISERROR(N'Số lượng phải >0 và đơn giá không được âm.',16,1);
-        ROLLBACK TRANSACTION;
+        RAISERROR(N'Số lượng phải >0 và đơn giá không được âm.',16,1)
+        ROLLBACK TRANSACTION
     END
-END;
+END
 GO
 
 -- 10. TRG_CTPHIEUNHAP_CHECK_DATA
@@ -363,10 +363,10 @@ AS
 BEGIN
     IF EXISTS (SELECT 1 FROM INSERTED WHERE (SOLUONG <= 0 OR DONGIA < 0))
     BEGIN
-        RAISERROR(N'Số lượng nhập phải >0 và đơn giá không được âm.',16,1);
-        ROLLBACK TRANSACTION;
+        RAISERROR(N'Số lượng nhập phải >0 và đơn giá không được âm.',16,1)
+        ROLLBACK TRANSACTION
     END
-END;
+END
 GO
 
 -- 11. TRG_HOADON_CHECK_DATE
@@ -377,10 +377,10 @@ AS
 BEGIN
     IF EXISTS (SELECT 1 FROM INSERTED WHERE NGAYLAP > GETDATE())
     BEGIN
-        RAISERROR(N'Ngày lập hóa đơn không được lớn hơn ngày hiện tại.',16,1);
-        ROLLBACK TRANSACTION;
+        RAISERROR(N'Ngày lập hóa đơn không được lớn hơn ngày hiện tại.',16,1)
+        ROLLBACK TRANSACTION
     END
-END;
+END
 GO
 
 -- 12. TRG_PHIEUNHAP_CHECK_DATE
@@ -391,10 +391,10 @@ AS
 BEGIN
     IF EXISTS (SELECT 1 FROM INSERTED WHERE NGAYNHAP > GETDATE())
     BEGIN
-        RAISERROR(N'Ngày nhập phiếu nhập không được lớn hơn ngày hiện tại.',16,1);
-        ROLLBACK TRANSACTION;
+        RAISERROR(N'Ngày nhập phiếu nhập không được lớn hơn ngày hiện tại.',16,1)
+        ROLLBACK TRANSACTION
     END
-END;
+END
 GO
 
 --13. TRG_CAPNHAT_TONKHO_KHI_XOA_CTHOADON
@@ -407,8 +407,8 @@ BEGIN
     UPDATE CHITIETGIAY
     SET SOLUONGTON = SOLUONGTON + d.SOLUONG
     FROM CHITIETGIAY ct
-    JOIN DELETED d ON ct.MAGIAY = d.MAGIAY;
-END;
+    JOIN DELETED d ON ct.MAGIAY = d.MAGIAY
+END
 GO
 
 --14. TRG_NGAYTAO_KHACHHANG_DEFAULT
@@ -421,8 +421,8 @@ BEGIN
     SET NGAYTAO = GETDATE()
     FROM KHACHHANG k
     JOIN INSERTED i ON k.MAKH = i.MAKH
-    WHERE i.NGAYTAO IS NULL;
-END;
+    WHERE i.NGAYTAO IS NULL
+END
 GO
 
 --15.TRG_CAPNHAT_TONKHO_KHI_XOA_CTPHIEUNHAP
@@ -435,8 +435,8 @@ BEGIN
     UPDATE CHITIETGIAY
     SET SOLUONGTON = SOLUONGTON - d.SOLUONG
     FROM CHITIETGIAY ct
-    JOIN DELETED d ON ct.MAGIAY = d.MAGIAY;
-END;
+    JOIN DELETED d ON ct.MAGIAY = d.MAGIAY
+END
 GO
 
 --16.TRG_NGAYVAOLAM_NHANVIEN_DEFAULT
@@ -449,8 +449,8 @@ BEGIN
     SET NGAYVAOLAM = GETDATE()
     FROM NHANVIEN nv
     JOIN INSERTED i ON nv.MANV = i.MANV
-    WHERE i.NGAYVAOLAM IS NULL;
-END;
+    WHERE i.NGAYVAOLAM IS NULL
+END
 GO
 
 --17.TRG_KHUYENMAI_CHECK_GIAMGIA
@@ -461,13 +461,13 @@ AS
 BEGIN
     IF EXISTS (SELECT 1 FROM INSERTED WHERE GIAMGIA < 0 OR GIAMGIA > 100)
     BEGIN
-        RAISERROR(N'Giảm giá phải từ 0 đến 100%.',16,1);
-        ROLLBACK TRANSACTION;
+        RAISERROR(N'Giảm giá phải từ 0 đến 100%.',16,1)
+        ROLLBACK TRANSACTION
     END
-END;
+END
 GO
 
-USE QL_BANGIAY;
+USE QL_BANGIAY
 GO
 
 ---------------------------------------------------------------
@@ -479,7 +479,7 @@ VALUES
 ('KH002', N'Trần Thị Hoa', '0987654321', 'hoa.tran@yahoo.com', N'Hồ Chí Minh', 85),
 ('KH003', N'Lê Văn Long', '0909888777', 'long.le@gmail.com', N'Đà Nẵng', 45),
 ('KH004', N'Phạm Thu Trang', '0977123456', 'trang.pham@gmail.com', N'Huế', 0),
-('KH005', N'Võ Quốc Khánh', '0933445566', 'khanh.vo@gmail.com', N'Cần Thơ', 30);
+('KH005', N'Võ Quốc Khánh', '0933445566', 'khanh.vo@gmail.com', N'Cần Thơ', 30)
 
 ---------------------------------------------------------------
 -- 2. NHÂN VIÊN
@@ -490,7 +490,7 @@ VALUES
 ('NV002', N'Lê Thị Mai', N'Nữ', '1995-03-22', '0922222222', N'Hồ Chí Minh', '2023-03-15'),
 ('NV003', N'Phan Thanh Tùng', N'Nam', '1992-09-10', '0933333333', N'Đà Nẵng', '2022-11-20'),
 ('NV004', N'Ngô Thị Hạnh', N'Nữ', '1998-07-18', '0944444444', N'Huế', '2024-05-12'),
-('NV005', N'Trần Đức Nam', N'Nam', '1988-02-05', '0955555555', N'Hải Phòng', '2021-12-01');
+('NV005', N'Trần Đức Nam', N'Nam', '1988-02-05', '0955555555', N'Hải Phòng', '2021-12-01')
 
 ---------------------------------------------------------------
 -- 3. NHÀ CUNG CẤP
@@ -501,7 +501,7 @@ VALUES
 ('NCC02', N'Công ty Nike Việt Nam', '0282233445', 'support@nike.vn', N'Hà Nội'),
 ('NCC03', N'Công ty Biti’s', '0288877665', 'info@bitis.vn', N'Cần Thơ'),
 ('NCC04', N'Công ty Puma Việt Nam', '0289988776', 'sales@puma.vn', N'Hà Nội'),
-('NCC05', N'Công ty Vans Official', '0285566778', 'contact@vans.vn', N'Đà Nẵng');
+('NCC05', N'Công ty Vans Official', '0285566778', 'contact@vans.vn', N'Đà Nẵng')
 
 ---------------------------------------------------------------
 -- 4. LOẠI GIÀY
@@ -512,7 +512,7 @@ VALUES
 ('LG02', N'Giày sneaker', N'Giày phong cách trẻ trung, năng động.'),
 ('LG03', N'Giày da nam', N'Giày công sở, chất liệu da cao cấp.'),
 ('LG04', N'Sandal', N'Dép quai hậu, phù hợp mùa hè.'),
-('LG05', N'Giày boot', N'Giày cổ cao, thời trang mùa đông.');
+('LG05', N'Giày boot', N'Giày cổ cao, thời trang mùa đông.')
 
 ---------------------------------------------------------------
 -- 5. MÀU SẮC
@@ -528,7 +528,7 @@ VALUES
 ('MS07', N'Xám'),
 ('MS08', N'Xanh lá'),
 ('MS09', N'Vàng'),
-('MS10', N'Hồng');
+('MS10', N'Hồng')
 
 ---------------------------------------------------------------
 -- 6. KÍCH CỠ
@@ -537,7 +537,7 @@ INSERT INTO KICHCO (MASIZE, KICHCO)
 VALUES
 ('S35', N'35'), ('S36', N'36'), ('S37', N'37'), ('S38', N'38'),
 ('S39', N'39'), ('S40', N'40'), ('S41', N'41'), ('S42', N'42'),
-('S43', N'43'), ('S44', N'44'), ('S45', N'45');
+('S43', N'43'), ('S44', N'44'), ('S45', N'45')
 
 ---------------------------------------------------------------
 -- 7. THƯƠNG HIỆU
@@ -548,7 +548,7 @@ VALUES
 ('TH02', N'Nike', 'nike.png'),
 ('TH03', N'Biti’s', 'bitis.png'),
 ('TH04', N'Puma', 'puma.png'),
-('TH05', N'Vans', 'vans.png');
+('TH05', N'Vans', 'vans.png')
 
 ---------------------------------------------------------------
 -- 8. GIÀY
@@ -583,19 +583,19 @@ VALUES
 ('G017', N'Vans Old Skool Classic', 'LG02', 'TH05', 'NCC05', 1700000, 'oldskool.jpg'),
 ('G018', N'Vans Slip-On Checkerboard', 'LG02', 'TH05', 'NCC05', 1600000, 'slipon.jpg'),
 ('G019', N'Vans Sk8-Hi', 'LG02', 'TH05', 'NCC05', 1850000, 'sk8hi.jpg'),
-('G020', N'Vans Authentic Classic', 'LG02', 'TH05', 'NCC05', 1550000, 'authentic.jpg');
+('G020', N'Vans Authentic Classic', 'LG02', 'TH05', 'NCC05', 1550000, 'authentic.jpg')
 
 INSERT INTO GIAY (MAGIAY, TENGIAY, MALOAI, MATH, MANCC, GIABAN, HINHANHSP)
 VALUES
 ('G021', N'Biti’s Sandal Nữ Summer', 'LG04', 'TH03', 'NCC03', 690000, 'sandalfemale.jpg'),
 ('G022', N'Nike Canyon Sandal', 'LG04', 'TH02', 'NCC02', 1850000, 'canyonsandal.jpg'),
-('G023', N'Adidas Adilette Comfort', 'LG04', 'TH01', 'NCC01', 1200000, 'adilette.jpg');
+('G023', N'Adidas Adilette Comfort', 'LG04', 'TH01', 'NCC01', 1200000, 'adilette.jpg')
 
 INSERT INTO GIAY (MAGIAY, TENGIAY, MALOAI, MATH, MANCC, GIABAN, HINHANHSP)
 VALUES
 ('G024', N'Puma Ankle Boot Leather', 'LG05', 'TH04', 'NCC04', 2750000, 'pumaboot.jpg'),
 ('G025', N'Vans Classic Leather Boot', 'LG05', 'TH05', 'NCC05', 2450000, 'vansboot.jpg'),
-('G026', N'Biti’s Hunter Boot', 'LG05', 'TH03', 'NCC03', 1650000, 'hunterboot.jpg');
+('G026', N'Biti’s Hunter Boot', 'LG05', 'TH03', 'NCC03', 1650000, 'hunterboot.jpg')
 
 ---------------------------------------------------------------
 -- 9. CHI TIẾT GIÀY
@@ -611,7 +611,7 @@ INSERT INTO CHITIETGIAY VALUES
 ('G014','MS05','S41',70), ('G015','MS09','S42',60),
 ('G016','MS06','S43',50), ('G017','MS10','S40',75),
 ('G018','MS07','S41',65), ('G019','MS04','S42',55),
-('G020','MS02','S39',40);
+('G020','MS02','S39',40)
 
 INSERT INTO CHITIETGIAY (MAGIAY, MAMAU, MASIZE, SOLUONGTON)
 VALUES
@@ -623,7 +623,7 @@ VALUES
 -- Boot (LG05)
 ('G024','MS07','S42',40),
 ('G025','MS08','S41',55),
-('G026','MS09','S43',30);
+('G026','MS09','S43',30)
 
 ---------------------------------------------------------------
 -- 10. KHUYẾN MÃI
@@ -634,7 +634,7 @@ VALUES
 ('KM02', N'Tết Nguyên Đán 2025', '2025-01-10', '2025-02-15', 20),
 ('KM03', N'Summer Sale', '2025-06-01', '2025-06-30', 10),
 ('KM04', N'Black Friday', '2025-11-25', '2025-11-30', 40),
-('KM05', N'Mừng Khai Trương', '2025-05-01', '2025-05-15', 25);
+('KM05', N'Mừng Khai Trương', '2025-05-01', '2025-05-15', 25)
 
 ---------------------------------------------------------------
 -- 11. HÓA ĐƠN
@@ -650,7 +650,7 @@ VALUES
 ('HD007', '2025-10-12', 'NV002', 'KH002', 0),
 ('HD008', '2025-10-14', 'NV003', 'KH003', 0),
 ('HD009', '2025-10-16', 'NV001', 'KH004', 0),
-('HD010', '2025-10-20', 'NV004', 'KH005', 0);
+('HD010', '2025-10-20', 'NV004', 'KH005', 0)
 ---------------------------------------------------------------
 -- 12. CHI TIẾT HÓA ĐƠN
 ---------------------------------------------------------------
@@ -684,7 +684,7 @@ VALUES
 ('HD009', 'G012', NULL, 2, 1150000, N'Tiền mặt'),
 
 ('HD010', 'G015', 'KM03', 1, 2500000, N'Chuyển khoản'),
-('HD010', 'G016', NULL, 1, 2300000, N'Tiền mặt');
+('HD010', 'G016', NULL, 1, 2300000, N'Tiền mặt')
 
 ---------------------------------------------------------------
 -- 13. PHIẾU NHẬP
@@ -695,7 +695,7 @@ VALUES
 ('PN002', '2025-09-10', 'NV002', 'NCC02'),
 ('PN003', '2025-09-15', 'NV003', 'NCC03'),
 ('PN004', '2025-09-20', 'NV001', 'NCC04'),
-('PN005', '2025-09-25', 'NV004', 'NCC05');
+('PN005', '2025-09-25', 'NV004', 'NCC05')
 
 ---------------------------------------------------------------
 -- 14. CHI TIẾT PHIẾU NHẬP
@@ -713,7 +713,7 @@ VALUES
 ('PN004', 'G010', 10, 1550000),
 ('PN005', 'G011', 25, 1350000),
 ('PN005', 'G012', 20, 1450000),
-('PN005', 'G013', 15, 1600000);
+('PN005', 'G013', 15, 1600000)
 
 
 ---------------------------------------------------------------
@@ -723,5 +723,8 @@ INSERT INTO TAIKHOAN (TENDANGNHAP, MATKHAU, MANV, VAITRO, TRANGTHAI, NGAYTAO)
 VALUES
 ('admin', '123456', 'NV001', N'Admin', N'Hoạt động', GETDATE()),
 ('thungan1', '123456', 'NV002', N'Thu ngân', N'Hoạt động', GETDATE()),
-('quanlykho', '123456', 'NV005', N'Quản lý kho', N'Hoạt động', GETDATE());
+('thungan2', '123456', 'NV003', N'Thu ngân', N'Hoạt động', GETDATE()),
+('quanlykho1', '123456', 'NV004', N'Quản lý kho', N'Hoạt động', GETDATE()),
+('quanlykho2', '123456', 'NV005', N'Quản lý kho', N'Hoạt động', GETDATE())
 GO
+
