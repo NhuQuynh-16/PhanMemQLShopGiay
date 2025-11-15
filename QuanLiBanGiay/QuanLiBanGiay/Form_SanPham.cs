@@ -110,7 +110,8 @@ namespace QuanLiBanGiay
                 if (!string.IsNullOrEmpty(fileAnh))
                 {
                     // --- Đường dẫn tuyệt đối tới thư mục chứa ảnh ---
-                    string imageFolder = @"\Images\SanPham";
+                    //string imageFolder = @"\Images\SanPham";
+                    string imageFolder = @"D:\CN.NEt\ảnh\ảnh giày";
                     string duongDan = Path.Combine(imageFolder, fileAnh);
 
 
