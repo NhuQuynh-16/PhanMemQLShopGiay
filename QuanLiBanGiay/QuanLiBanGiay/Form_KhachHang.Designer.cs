@@ -292,7 +292,7 @@
             this.dtpNgayTao.Location = new System.Drawing.Point(776, 200);
             this.dtpNgayTao.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.dtpNgayTao.Name = "dtpNgayTao";
-            this.dtpNgayTao.Size = new System.Drawing.Size(224, 31);
+            this.dtpNgayTao.Size = new System.Drawing.Size(288, 31);
             this.dtpNgayTao.TabIndex = 84;
             // 
             // btnTimKiem
