@@ -1,0 +1,48 @@
+# =========================
+# Visual Studio & .NET
+# =========================
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache
+.vs/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# .NET Core / SDK
+*.dll
+*.exe
+*.pdb
+*.cache
+*.tmp
+*.log
+
+# Project files
+*.csproj.user
+*.dbmdl
+*.jfm
+
+# NuGet
+packages/
+*.nupkg
+
+# Others
+*.bak
+*.tmp
+*.cache
+*.log
+*.vspscc
+*.vssscc
